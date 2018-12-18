@@ -1,1 +1,27 @@
-language: node_jsnode_js: stable# S: Build Lifecycleinstall:  - npm installbefore_install:  - git submodule update --init --remote --recursive  #before_script: # - npm install -g gulpscript:  - hexo gafter_script:  - cd ./public  - git init  - git config user.name "troyyang"  - git config user.email "yangzhouemail@163.com"  - git add .  - git commit -m "Update docs"  - git push --force --quiet "https://${GitHub_TOKEN}@${GH_REF}" master:master# E: Build LifeCyclebranches:  only:    - Sourceenv: global:   - GH_REF: github.com/Troy-Yang/troy-yang.github.io.git
+language: node_js
+node_js:
+  - "8"
+
+cache:
+  directories:
+    - "node_modules"
+
+branches:
+  only:
+    - master
+
+install:
+  - npm install
+  - npm run build
+
+script:
+  - echo "Skipping tests"
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure https://docs.travis-ci.com/user/deployment/pages/#Setting-the-GitHub-token
+  target-branch: gh-pages
+  local-dir: dist
+  on:
+    branch: master
