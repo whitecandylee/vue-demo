@@ -14,3 +14,4 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+/dist/static/js/manifest.3ad1d5771e9b13dbdad2.js.map
